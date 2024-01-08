@@ -1,11 +1,11 @@
 "use client";
 
 import { configureStore } from "@reduxjs/toolkit";
-import defaultSlice from "./slice/defaultSlice";
+import pushSlice from "@/redux/slice/pushSlice";
 
 export const store = configureStore({
   reducer: {
-    default: defaultSlice,
+    push: pushSlice,
   },
 
   middleware: (getDefaultMiddleware) =>
