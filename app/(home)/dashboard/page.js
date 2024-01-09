@@ -1,6 +1,8 @@
 "use client";
 
+import Chats from "@/components/layout/dashboard/Chats";
 import Navbar from "@/components/layout/dashboard/Navbar";
+import Requests from "@/components/layout/dashboard/Requests";
 import {
   Tabs,
   TabsHeader,
@@ -36,8 +38,12 @@ export default function Dashboard() {
         </TabsHeader>
 
         <TabsBody>
-          <TabPanel value="Chats">Chats</TabPanel>
-          <TabPanel value="Requests">Requests</TabPanel>
+          <TabPanel value="Chats" className="px-0">
+            <Chats />
+          </TabPanel>
+          <TabPanel value="Requests" className="px-0">
+            <Requests />
+          </TabPanel>
         </TabsBody>
       </Tabs>
     </div>
