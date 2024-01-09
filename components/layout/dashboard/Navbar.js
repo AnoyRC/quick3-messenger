@@ -4,12 +4,14 @@ import Avatar from "boring-avatars";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAccount, useDisconnect } from "wagmi";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
   const { disconnect } = useDisconnect();
   const router = useRouter();
   const { address, connector } = useAccount();
   const [client, setClient] = useState(false);
+  const stream = useSelector((state) => state.push.stream);
 
   useState(() => {
     setClient(true);
@@ -26,7 +28,13 @@ export default function Navbar() {
             colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
           />
           <div className="flex flex-col">
-            <h2 className="text-lg text-white">
+            <h2
+              className="text-lg text-white hover:cursor-pointer"
+              onClick={() => {
+                navigator.clipboard.writeText(address);
+                alert("Copied to clipboard!");
+              }}
+            >
               {address
                 ? address.slice(0, 4) + "..." + address.slice(-4)
                 : "0x00...0000"}
@@ -48,6 +56,9 @@ export default function Navbar() {
           size="lg"
           onClick={() => {
             disconnect();
+            if (stream) {
+              stream.disconnect();
+            }
             router.push("/");
           }}
         >

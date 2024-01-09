@@ -7,9 +7,10 @@ import { Button } from "@material-tailwind/react";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { PushAPI, CONSTANTS } from "@pushprotocol/restapi";
 import { useEthersSigner } from "@/wagmi/EthersSigner";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/slice/pushSlice";
 import { useRouter } from "next/navigation";
+import usePush from "@/hooks/usePush";
 
 export default function Home() {
   const { connect, connectors } = useConnect();
@@ -18,6 +19,8 @@ export default function Home() {
   const signer = useEthersSigner();
   const dispatch = useDispatch();
   const router = useRouter();
+  const { streamChat } = usePush();
+  const stream = useSelector((state) => state.push.stream);
 
   return (
     <div className="h-screen w-screen flex items-center justify-center bg-black">
@@ -65,6 +68,7 @@ export default function Home() {
                 if (user) {
                   if (!user.readMode) {
                     dispatch(setUser(user));
+                    streamChat(user);
                     router.push("/dashboard");
                   }
                 }
@@ -77,6 +81,7 @@ export default function Home() {
               className="w-full mt-5 rounded-2xl flex items-center justify-center"
               size="lg"
               onClick={() => {
+                if (stream) stream.disconnect();
                 disconnect();
               }}
             >

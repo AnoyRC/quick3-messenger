@@ -1,6 +1,6 @@
 "use client";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import usePush from "@/hooks/usePush";
 import RequestBox from "./RequestBox";
@@ -8,14 +8,20 @@ import RequestBox from "./RequestBox";
 export default function Requests() {
   const user = useSelector((state) => state.push.user);
   const requests = useSelector((state) => state.push.requests);
-  const dispatch = useDispatch();
   const { fetchRequests } = usePush();
+  const data = useSelector((state) => state.push.data);
 
   useEffect(() => {
     if (user) {
       fetchRequests();
     }
   }, [user]);
+
+  useEffect(() => {
+    if (data && user) {
+      fetchRequests();
+    }
+  }, [data]);
 
   return (
     requests && (

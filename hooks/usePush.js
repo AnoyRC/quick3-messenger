@@ -1,6 +1,12 @@
 "use client";
 
-import { setChats, setRequests } from "@/redux/slice/pushSlice";
+import {
+  setChats,
+  setData,
+  setRequests,
+  setStream,
+} from "@/redux/slice/pushSlice";
+import { CONSTANTS } from "@pushprotocol/restapi";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function usePush() {
@@ -14,7 +20,6 @@ export default function usePush() {
 
   const fetchRequests = async () => {
     const requests = await user.chat.list("REQUESTS");
-    console.log(requests);
     dispatch(setRequests(requests));
   };
 
@@ -30,5 +35,39 @@ export default function usePush() {
     fetchRequests();
   };
 
-  return { fetchChats, fetchRequests, acceptRequest, rejectRequest };
+  const streamChat = async (user) => {
+    const stream = await user.initStream(
+      [CONSTANTS.STREAM.CHAT, CONSTANTS.STREAM.CHAT_OPS],
+      {
+        filter: {
+          channels: ["*"],
+          chats: ["*"],
+        },
+        connection: {
+          retries: 3,
+        },
+        raw: false,
+      }
+    );
+
+    stream.on(CONSTANTS.STREAM.CHAT, (data) => {
+      dispatch(setData(data));
+    });
+
+    stream.on(CONSTANTS.STREAM.CHAT_OPS, (data) => {
+      dispatch(setData(data));
+    });
+
+    stream.connect();
+
+    dispatch(setStream(stream));
+  };
+
+  return {
+    fetchChats,
+    fetchRequests,
+    acceptRequest,
+    rejectRequest,
+    streamChat,
+  };
 }

@@ -18,12 +18,19 @@ export default function Chats() {
   const user = useSelector((state) => state.push.user);
   const chats = useSelector((state) => state.push.chats);
   const { fetchChats } = usePush();
+  const data = useSelector((state) => state.push.data);
 
   useEffect(() => {
     if (user) {
       fetchChats();
     }
   }, [user]);
+
+  useEffect(() => {
+    if (data && user) {
+      fetchChats();
+    }
+  }, [data]);
 
   return (
     chats && (

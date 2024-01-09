@@ -7,6 +7,8 @@ const pushSlice = createSlice({
     user: null,
     chats: null,
     requests: null,
+    stream: null,
+    data: null,
   },
 
   reducers: {
@@ -19,9 +21,16 @@ const pushSlice = createSlice({
     setRequests: (state, action) => {
       state.requests = action.payload;
     },
+    setStream: (state, action) => {
+      state.stream = action.payload;
+    },
+    setData: (state, action) => {
+      state.data = action.payload;
+    },
   },
 });
 
-export const { setUser, setChats, setRequests } = pushSlice.actions;
+export const { setUser, setChats, setRequests, setStream, setData } =
+  pushSlice.actions;
 
 export default pushSlice.reducer;

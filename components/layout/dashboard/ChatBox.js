@@ -1,8 +1,16 @@
 import Avatar from "boring-avatars";
+import { useRouter } from "next/navigation";
 
 export default function ChatBox({ chat }) {
+  const router = useRouter();
+
   return (
-    <div className="w-full flex items-center gap-4 rounded-2xl bg-gray-900 hover:bg-gray-800 transition-colors duration-300 hover:cursor-pointer p-3 px-5">
+    <div
+      className="w-full flex items-center gap-4 rounded-2xl bg-gray-900 hover:bg-gray-800 transition-colors duration-300 hover:cursor-pointer p-3 px-5"
+      onClick={() => {
+        router.push(`/chat/${chat.did}`);
+      }}
+    >
       <Avatar
         size={40}
         name={chat.did.split(":")[1]}
