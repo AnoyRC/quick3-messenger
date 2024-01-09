@@ -2,7 +2,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setChats } from "@/redux/slice/pushSlice";
+import { handleAddDialog, setChats } from "@/redux/slice/pushSlice";
 import ChatBox from "./ChatBox";
 import { Button } from "@material-tailwind/react";
 import { PlusIcon } from "@heroicons/react/24/solid";
@@ -19,6 +19,7 @@ export default function Chats() {
   const chats = useSelector((state) => state.push.chats);
   const { fetchChats } = usePush();
   const data = useSelector((state) => state.push.data);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (user) {
@@ -44,6 +45,9 @@ export default function Chats() {
             "flex items-center justify-center w-full rounded-2xl normal-case " +
             poppins.className
           }
+          onClick={() => {
+            dispatch(handleAddDialog());
+          }}
         >
           Add Contact
           <PlusIcon className="h-5 w-5" />

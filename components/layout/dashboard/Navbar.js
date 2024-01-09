@@ -47,7 +47,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center -ml-9">
+        <div className="flex flex-col items-center -ml-16">
           <h1 className="font-bold text-5xl">Quick3</h1>
         </div>
 

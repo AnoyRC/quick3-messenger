@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Quick3",
+  title: "Quick3 | Connect",
   description: "Quick3 Messenger",
 };
 

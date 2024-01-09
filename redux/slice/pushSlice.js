@@ -9,6 +9,7 @@ const pushSlice = createSlice({
     requests: null,
     stream: null,
     data: null,
+    addDialog: false,
   },
 
   reducers: {
@@ -27,10 +28,19 @@ const pushSlice = createSlice({
     setData: (state, action) => {
       state.data = action.payload;
     },
+    handleAddDialog: (state, action) => {
+      state.addDialog = !state.addDialog;
+    },
   },
 });
 
-export const { setUser, setChats, setRequests, setStream, setData } =
-  pushSlice.actions;
+export const {
+  setUser,
+  setChats,
+  setRequests,
+  setStream,
+  setData,
+  handleAddDialog,
+} = pushSlice.actions;
 
 export default pushSlice.reducer;
